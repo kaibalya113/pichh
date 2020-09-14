@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "373035626157",
+    "firebase_url": "https://picshh-34de4.firebaseio.com",
+    "project_id": "picshh-34de4",
+    "storage_bucket": "picshh-34de4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373035626157:android:21b97bc1477c9cf6b86024",
+        "android_client_info": {
+          "package_name": "com.kaibalya.picshh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373035626157-b8st6p2a5l7ni6n3m5oe8dd06jpukc5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlDBPgwedqkgzHnxMgvgILYCx17yXEks4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373035626157-b8st6p2a5l7ni6n3m5oe8dd06jpukc5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
