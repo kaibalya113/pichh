@@ -45,7 +45,7 @@ class PostActivity : AppCompatActivity() {
             posts.addAll(postsDocs)
             adapter.notifyDataSetChanged()
             for(document in postsDocs){
-                Log.i(TAG, "Document: ${document.description}: ${document.imageUrl}")
+                //Log.i(TAG, "Document: ${document.description}: ${document.imageUrl}")
             }
         }
         // retrive data from firestore
