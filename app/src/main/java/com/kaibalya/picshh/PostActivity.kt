@@ -15,7 +15,7 @@ import com.kaibalya.picshh.model.User
 import kotlinx.android.synthetic.main.activity_post.*
 
 private const val TAG = "PostActivity"
-private const val EXTRA_USERNAME ="EXTRA_USERNAME"
+public const val EXTRA_USERNAME ="EXTRA_USERNAME"
 open class PostActivity : AppCompatActivity() {
 
     private var signediInUser: User? =null

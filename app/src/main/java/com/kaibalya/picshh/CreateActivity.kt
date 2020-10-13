@@ -9,6 +9,9 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.kaibalya.picshh.model.Post
 import com.kaibalya.picshh.model.User
 import kotlinx.android.synthetic.main.activity_create.*
 import kotlinx.android.synthetic.main.item_post.*
@@ -19,12 +22,12 @@ class CreateActivity : AppCompatActivity() {
     private var photoPath: Uri? = null
     private var signediInUser: User? =null
     private lateinit var firestoreDb: FirebaseFirestore
-
+    private lateinit var storageReference: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create)
-
+        storageReference = FirebaseStorage.getInstance().reference
         firestoreDb = FirebaseFirestore.getInstance()
 
         firestoreDb.collection("users").document(
@@ -66,8 +69,43 @@ class CreateActivity : AppCompatActivity() {
             return
         }
 
+        btnSubmit.isEnabled = false
+        val photoUploadUri = photoPath as Uri
+        val photoReference = storageReference.child("images/${System.currentTimeMillis()}-photo.jpg")
         // upload photo to firebase storage
+        photoReference.putFile(photoUploadUri)
+            .continueWithTask {
+                // Retrive image url of uploaded image
+                photoReference.downloadUrl
 
+            }.continueWith { downloadUrlTask ->
+                val post = Post(
+                    downloadUrlTask.result.toString(),
+                    textDesc1.text.toString(),
+
+                    System.currentTimeMillis(),
+                    signediInUser
+
+                )
+                firestoreDb.collection("posts").add(post)
+            }.addOnCompleteListener { postCreationTask ->
+                btnSubmit.isEnabled = true
+                if(!postCreationTask.isSuccessful){
+                  //  Log.e("Exception During Firebase operations", postCreationTask.exception)
+                    Toast.makeText(this, "Failed to save the post", Toast.LENGTH_SHORT).show()
+                }
+                textDesc1.text.clear()
+                imageView.setImageResource(0)
+                Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show()
+                val profileIntent = Intent(this, ProfileActivity::class.java)
+                profileIntent.putExtra(EXTRA_USERNAME, signediInUser?.name)
+                startActivity(profileIntent)
+
+            }
+
+
+
+        // create a post object with the image URL and add that to the posts collections
 
 
     }
